@@ -5,9 +5,13 @@
         that._options = options;
     };
 
-    var DraggablePrototype = Draggable.prototype;
-    DraggablePrototype.returnTrue = function() {
-        return true;
+    Draggable.prototype = {
+        returnValue: function(value) {
+            if (value === false) {
+                return false;
+            }
+            return true;
+        }
     };
 
     $.fn.Draggable = Draggable;
