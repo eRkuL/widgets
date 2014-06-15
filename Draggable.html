@@ -11,16 +11,21 @@
             }
             #container {
                 background-color: #ccc;
-                width: 300px;
-                
+                width: 500px;
             }
             .dragElement {
-                background-color: #00ffcc;
-                width: auto;
-                height: 50px;
-                margin-bottom: 10px;
-                border: 1px solid red;
-                border-radius: 14px;
+                /*background-color: #00ffcc;*/
+                /*width: auto;*/
+                /*height: 50px;*/
+                /*margin-bottom: 10px;*/
+                /*border: 1px solid red;*/
+                /*border-radius: 14px;*/
+            }
+
+            .dragElemnt>img {
+                border: 10px solid blue;
+                width: 100px;
+                height: 100px;
             }
             
             .dragElement:hover {
@@ -84,9 +89,10 @@
 	
     <body>
         <div id="container">
-            <div class="dragElement" draggable="true">A</div>
-            <div class="dragElement" draggable="true">B</div>
-            <div class="dragElement" draggable="true">C</div>
+            <div class="dragElement" draggable="true"><img src="images/tile-purple.png"></div>
+            <div class="dragElement" draggable="true"><img src="images/tile-green.png"></div>
+            <div class="dragElement" draggable="true"><img src="images/tile-orange.png"></div>
+            <div class="dragElement" draggable="true"><img src="images/tile-blue.png"></div>
         </div>
         
     </body>
