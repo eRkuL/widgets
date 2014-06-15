@@ -7,92 +7,122 @@
         
         <style>
             body {
-                background-color: #000;
-            }
-            #container {
-                background-color: #ccc;
-                width: 500px;
-            }
-            .dragElement {
-                /*background-color: #00ffcc;*/
-                /*width: auto;*/
-                /*height: 50px;*/
-                /*margin-bottom: 10px;*/
-                /*border: 1px solid red;*/
-                /*border-radius: 14px;*/
+                /*background-color: #000;*/
             }
 
-            .dragElemnt>img {
-                border: 10px solid blue;
-                width: 100px;
-                height: 100px;
+            #container {
+                background-color: #ccc;
             }
-            
+
+            .dragElement {
+                width: 420px;
+                height: 170px;
+                border:1px solid red;
+                margin-top: 16px;
+            }
+
             .dragElement:hover {
                 cursor: move;
             }
+
+            #tile1 {
+                background: url("images/tile-purple.png") no-repeat;
+            }
+
+            #tile2 {
+                background: url("images/tile-orange.png") no-repeat;
+            }
+
+            #tile3 {
+                background: url("images/tile-green.png") no-repeat;
+            }
+
+            #tile4 {
+                background: url("images/tile-blue.png") no-repeat;
+            }
         </style>
         
-        <script>
+        <script type="text/javascript">
             var DRAG_ELEMENT_CLASS = ".dragElement";
-            
+            var draggedElement = null;
+
             $(document).ready(function () {
                 attacDragAndDropHandlers();
             });
-            
+
             function attacDragAndDropHandlers() {
                 var dragElements = $(DRAG_ELEMENT_CLASS),
                     count = dragElements.length;
+
                 for (i = 0; i < count; i++) {
                     attachEventHandler(dragElements[i], "dragstart", dragStartHandler);
-                    attachEventHandler(dragElements[i], "dragend", dragStartHandler);
+                    attachEventHandler(dragElements[i], "dragend", dragEndHandler);
                     attachEventHandler(dragElements[i], "dragenter", dragEnterHandler);
                     attachEventHandler(dragElements[i], "dragover", dragOverHandler);
-                    attachEventHandler(dragElements[i], "dragleave", dragLeaveHandler);  
+                    attachEventHandler(dragElements[i], "dragleave", dragLeaveHandler);
                     attachEventHandler(dragElements[i], "drop", dropHandler);
                 }
             }
-            
+
             function attachEventHandler(element, event, handler) {
                 $(element).on(event, handler);
             }
-            
+
             function dragStartHandler(e) {
                 console.log("start");
-                e.target.style.opacity = 0.5;
+                e.originalEvent.dataTransfer.setData("text/html", "");
+                draggedElement = e.target;
+                //e.target.style.opacity = 0.5;
             }
-            
+
             function dragEndHandler(e) {
                 console.log("end");
                 e.target.style.opacity = 1.0;
             }
-                
+
             function dragOverHandler(e) {
+                console.log("over");
                 e.preventDefault();
             }
-            
+
             function dragEnterHandler(e) {
+                console.log("enter");
                 e.target.style.background = "#ff0000";
             }
-            
+
             function dragLeaveHandler(e) {
+                console.log("leave");
                 e.target.style.background = "";
             }
-            
+
             function dropHandler(e) {
                 console.log("drop");
+
                 e.target.style.opacity = 1.0;
                 e.target.style.background = "";
+
+                switchDomElements(draggedElement, e.target);
+                draggedElement = null;
+            }
+
+            function switchDomElements(element1, element2) {
+                var parent1 = element1.parentNode,
+                    parent2 = element2.parentNode,
+                    next1 = element1.nextSibling,
+                    next2 = element2.nextSibling;
+
+                parent1.insertBefore(element2, next1);
+                parent2.insertBefore(element1, next2);
             }
         </script>
 	</head>
 	
     <body>
         <div id="container">
-            <div class="dragElement" draggable="true"><img src="images/tile-purple.png"></div>
-            <div class="dragElement" draggable="true"><img src="images/tile-green.png"></div>
-            <div class="dragElement" draggable="true"><img src="images/tile-orange.png"></div>
-            <div class="dragElement" draggable="true"><img src="images/tile-blue.png"></div>
+            <div id="tile1" class="dragElement" draggable="true">&nbsp;</div>
+            <div id="tile2" class="dragElement" draggable="true"></div>
+            <div id="tile3" class="dragElement" draggable="true"></div>
+            <div id="tile4" class="dragElement" draggable="true"></div>
         </div>
         
     </body>
